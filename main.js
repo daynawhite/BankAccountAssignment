@@ -3,6 +3,7 @@ let currentBalance = 0
 let transactDate
 let newCharge
 let newDeposit
+let newTransaction
 
 class BankAccount {
     constructor (accountNumber, owner) {
@@ -10,14 +11,13 @@ class BankAccount {
         this.owner = owner
         this.transactions = []
     }
-    
     balance() {
         // compute balance by adding up amounts in transaction array
         currentBalance = this.transactions.reduce(getSum)
         function getSum(total, value) {
             return total + value;
         }
-        console.log(currentBalance)
+        // console.log(currentBalance)
         return currentBalance
     }
     deposit(depAmt) {
@@ -39,6 +39,19 @@ class Transaction {
         this.transactDate = new Date()
     }
 }
-// const trans1 = new Transaction(1000, 'paycheck')
-// const trans2 = new Transaction(-200, 'HEB')
-// const trans3 = new Transaction(-50, 'Amazon')
+
+// Below is my method for checking to see if everything works as expected:
+
+function addTransaction(acct, payee, amt) {
+    if (amt > 0) {
+        acct.deposit(amt);
+    } else {acct.charge(payee, amt);
+    }
+}
+let acct1 = new BankAccount(1234, "JD")
+console.log(acct1)
+addTransaction(acct1, 'paycheck', 1000)
+addTransaction(acct1, "HEB", -200)
+addTransaction(acct1, 'Amazon', -50)
+console.log(acct1.transactions)
+console.log(acct1.balance())
